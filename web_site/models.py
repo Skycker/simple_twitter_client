@@ -6,8 +6,11 @@ from allauth.account.signals import user_signed_up
 from allauth.socialaccount.models import SocialApp
 from django.conf import settings
 from django.db import models
+from django.urls import reverse
 
 
+# One twitter account can follow two ore more users.
+# So, better way is to make many-to-many relationship between Follower model and AUTH_USER_MODEL
 class Follower(models.Model):
     """ User's twitter followers list """
 
@@ -24,10 +27,16 @@ class Follower(models.Model):
     def full_screen_name(self):
         return "@{0}".format(self.screen_name)
 
+    def get_absolute_url(self):
+        return reverse("web_site:follower", kwargs={'pk': self.pk})
+
     def __unicode__(self):
         return self.full_screen_name
 
 
+# better approach is synchronization followers asynchronously. I will reduce time user waiting after registration.
+# Extra http requests to Twitter take time and suffer from possible network connection problems
+# Run async task just after registration and run it periodically to load new followers
 def sync_followers(request, user, **kwargs):
     """ Sync user's followers after sign up """
 
@@ -49,7 +58,7 @@ def sync_followers(request, user, **kwargs):
                      followers_count=follower.followers_count, lang=follower.lang,
                      )
         )
-    Follower.objects.bulk_create(followers)
+    Follower.objects.bulk_create(followers, batch_size=100)
 
 
 user_signed_up.connect(sync_followers)

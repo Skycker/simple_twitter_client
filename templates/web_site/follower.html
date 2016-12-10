@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <h1>
+            {% if follower.image_url %}
+                <img src="{{ follower.image_url }}">
+            {% endif %}
+            {{ follower.full_screen_name }}
+        </h1>
+
+        <p>{{ follower.name }}</p>
+        {% if follower.description %}
+            <p>{{ follower.description }}</p>
+        {% endif %}
+        <p>Language: {{ follower.lang }}</p>
+
+        <p>Number of followers: {{ follower.followers_count }}</p>
+
+        <a href="{% url "web_site:followers" %}" class="btn btn-default">
+            <i class="glyphicon glyphicon-arrow-left"></i>
+            To list of followers
+        </a>
+    </div>
+{% endblock %}

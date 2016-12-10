@@ -5,10 +5,33 @@
 {% block content %}
     <div class="row">
         <div class="col-lg-12 text-center" style="margin-top: 40vh">
-            <a href="{% provider_login_url "twitter" next=after_login_url %}" class="btn btn-default btn-lg">
-                Enter using Twitter
-            </a>
-            <p>{{ user }}</p>
+            {% if not user.is_anonymous %}
+                <p>You are logged in as {{ user }}</p>
+
+                <p>
+                    <a href="{% url "web_site:followers" %}" class="btn btn-default">Go to list of followers</a>
+                </p>
+
+                <p>
+                    <form method="POST" action="{% url "account_logout" %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-default">Log out</button>
+                    </form>
+                </p>
+
+                <p>
+                    <form method="POST" action="{% url "web_site:remove" %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger" title="Remove account and related followers">
+                            Remove account
+                        </button>
+                    </form>
+                </p>
+            {% else %}
+                <a href="{% provider_login_url "twitter" next=after_login_url %}" class="btn btn-default btn-lg">
+                    Enter using Twitter
+                </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

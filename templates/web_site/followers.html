@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-6">
+            <h1>@{{ user }} followers</h1>
+
+            <form>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">@</span>
+                    <input type="text" name="q" class="form-control" placeholder="Screen name" value="{{ q }}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Search</button>
+                    </span>
+                </div>
+            </form>
+
+            <a href="{% url "web_site:index" %}" class="btn btn-default" style="margin-top: 10px">
+                <i class="glyphicon glyphicon-arrow-left"></i>
+                To index page
+            </a>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 25px">
+        <div class="col-lg-12">
+            {% if followers %}
+                <ul class="media-list">
+                    {% for follower in followers %}
+                        <li class="media">
+                            <div class="media-left">
+                                <a href="{{ follower.get_absolute_url }}">
+                                    <img class="media-object" src="{{ follower.image_url }}" alt="no photo">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <a href="{{ follower.get_absolute_url }}">
+                                    <h4 class="media-heading">{{ follower.full_screen_name }}</h4>
+                                </a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Yo do not have any follower =/</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
