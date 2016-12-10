@@ -10,8 +10,8 @@ To run the project locally
 * `cd simple_twitter_client/`  
 * `virtualenv venv --prompt='(stc)'`  
 * `source venv/bin/activate`  
-* `pip install *r requirements.txt`  
-* create file `simple_twitter_client/local_settings.py`  
+* `pip install -r requirements.txt`  
+* create file `simple_twitter_client/local_settings.py` and fill like in example below   
 * create database, user, grant perms to user  
 * run migrations `./manage.py migrate`
 * create superuser `./manage.py createsuperuser`
@@ -19,12 +19,13 @@ To run the project locally
 * make sure that Site for your domain exists (django.contrib.sites instance matching settings.SITE_ID). [http://127.0.0.1:8000/admin/sites/site/](http://127.0.0.1:8000/admin/sites/site/)
 * go to [http://127.0.0.1:8000/admin/socialaccount/socialapp/](http://127.0.0.1:8000/admin/socialaccount/socialapp/)  and create new record
   * Fill data about social app 
-    * Provider: twitter  
+    * Provider: Twitter  
     * Name: for app (for example `twitter social app`)
     * Client id 
     * Secret key
-    * Sites: select site in with settings.SITE_ID 
-* go to `http://127.0.0.1:8000/` and check the project  
+    * Sites: select site in with settings.SITE_ID  
+  * Log out from admin 
+* go to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) and check the project  
 
 **Development local_settings.py example**
 
