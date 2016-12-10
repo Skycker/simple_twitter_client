@@ -1,2 +1,9 @@
 Django==1.10.4
+django-allauth==0.29.0
+oauthlib==2.0.1
 psycopg2==2.6.2
+python-openid==2.2.5
+requests==2.12.3
+requests-oauthlib==0.7.0
+six==1.10.0
+tweepy==3.5.0
